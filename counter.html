@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+  body {
+    text-align: center;
+    padding-top: 60px;
+    background: linear-gradient(90deg,#ff9a9e,#fecfef);
+    font-family: Calibri;
+    font-size: 22px;
+  }
+
+  #num {
+    font-size: 50px;
+    padding: 20px;
+    width: 120px;
+    margin: 20px auto;
+    border-radius: 10px;
+    background: linear-gradient(#ff9a9e, #fad0c4);
+    box-shadow:0 8px 20px rgba(0,0,0,0.18) ;
+  }
+
+  button {
+    padding: 10px 20px;
+    font-size: 20px;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    background: linear-gradient(#667eea, #764ba2);
+    margin: 5px;
+  }
+</style>
+</head>
+<body>
+
+<h2>Prime Counter</h2>
+<div id="num">2</div>
+
+<button onclick="prevPrime()">Previous</button>
+<button onclick="nextPrime()">Next</button>
+
+<script>
+let current = 2;
+
+function isPrime(n) {
+  for (let i = 2; i <= Math.sqrt(n); i++)
+    if (n % i === 0) return false;
+  return n > 1;
+}
+
+function nextPrime() {
+  let n = current + 1;
+  while (!isPrime(n)) n++;
+  current = n;
+  document.getElementById("num").innerText = current;
+}
+
+function prevPrime() {
+  if (current == 2) return;
+  let n = current - 1;
+  while (n > 1 && !isPrime(n)) n--;
+  current = n;
+  document.getElementById("num").innerText = current;
+}
+</script>
+
+</body>
+</html>
