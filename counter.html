@@ -22,12 +22,13 @@
 
   button {
     padding: 10px 20px;
-    font-size: 20px;
+    width: 60px;
+    font-size: 25px;
     border: none;
     border-radius: 8px;
     color: white;
     background: linear-gradient(#667eea, #764ba2);
-    margin: 5px;
+    margin: 6px;
   }
 </style>
 </head>
@@ -36,8 +37,8 @@
 <h2>Prime Counter</h2>
 <div id="num">2</div>
 
-<button onclick="prevPrime()">Previous</button>
-<button onclick="nextPrime()">Next</button>
+<button onclick="prevPrime()">-</button>
+<button onclick="nextPrime()">+</button>
 
 <script>
 let current = 2;
