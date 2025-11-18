@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>HTML FORM</title>
+  <style>
+    body {
+      background-color: #f0f4f8; /* Light background */
+      font-family: sans-serif;
+      padding: 10px;
+      color: #333;
+    }
+    header {
+      background-color: #333; /* Dark header background */
+      text-align: center;
+      color: white;
+      margin-bottom:15px;
+      padding:20px;
+      font-size:20px;
+    }
+    form{
+      width:400px;
+      margin: auto;
+      background-color: white;
+      padding: 50px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px black;
+    }
+    label {
+      font-weight:bold;
+    }
+
+  </style>
+  <script>
+    function validateForm() {
+      let fname = document.getElementById("fname").value.trim();
+      let lname = document.getElementById("lname").value.trim();
+      let dob = document.getElementById("dob").value.trim();
+      let email = document.getElementById("email").value.trim();
+      let phone = document.getElementById("phone").value.trim();
+      let age = document.getElementById("age").value.trim();
+      let password = document.getElementById("password").value.trim();
+      let cpassword = document.getElementById("cpassword").value.trim();
+
+      // Check for empty fields
+      if (fname === "") {
+        alert("First Name cannot be empty!");
+        return false;
+      }
+
+      if (lname === "") {
+        alert("Last Name cannot be empty!");
+        return false;
+      }
+
+      let emailPattern = /^[a-zA-Z0-9._%+-]+@[a-z0-9]+\.[a-z]{2,}$/;
+      if (!emailPattern.test(email)) {
+        alert("Enter a valid email!");
+        return false;
+      }
+
+      // Phone validation: Must be numeric and not empty
+      if (phone === "" || isNaN(phone)) {
+        alert("Enter a valid phone number!");
+        return false;
+      }
+
+      // Age validation: Must be a valid number
+      if (age === "" || isNaN(age)) {
+        alert("Please enter a valid age!");
+        return false;
+      }
+
+      // Password matching
+      if (password === "" || cpassword === "") {
+        alert("Password cannot be empty!");
+        return false;
+      }
+
+      if (password !== cpassword) {
+        alert("Passwords do not match!");
+        return false;
+      }
+
+      // Date of birth validation (YYYY-MM-DD format)
+      var dobPattern = /^\d{4}-\d{2}-\d{2}$/;
+      if (dob == null || dob == "" || !dobPattern.test(dob)) {
+        alert("Invalid date of birth");
+        return false;
+      }
+
+      alert("Form submitted successfully!");
+      return true;
+    }
+  </script>
+</head>
+<body>
+
+  <header>Profile Setup</header>
+
+  <div class="container">
+    <form id="myform" action="submit" method="post" onsubmit="return validateForm()">
+      
+      <label for="fname">First Name:</label><br>
+      <input type="text" id="fname" name="fname"><br><br>
+      
+      <label for="lname">Last Name:</label><br>
+      <input type="text" id="lname" name="lname"><br><br>
+      
+      <label for="dob">Date of Birth:</label><br>
+      <input type="date" id="dob" name="dob"><br><br>
+      
+      <label>Gender:</label><br>
+      <div class="radio-group">
+        <input type="radio" id="male" name="gender" value="Male">
+        <label for="male">Male</label><br>
+        <input type="radio" id="female" name="gender" value="Female">
+        <label for="female">Female</label><br>
+      </div>
+
+      <label for="email">Email:</label><br>
+      <input type="text" id="email" name="email"><br><br>
+      
+      <label for="phone">Phone Number:</label><br>
+      <input type="text" id="phone" name="phone" maxlength="10"><br><br>
+
+      <label for="age">Age:</label><br>
+      <input type="text" id="age" name="age"><br><br>
+
+      <label for="password">Password:</label><br>
+      <input type="password" id="password" name="password" required minlength="8" pattern="(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}" title="Password must be at least 8 characters long and contain at least one letter and one number."><br><br>
+
+      <label for="cpassword">Confirm Password:</label><br>
+      <input type="password" id="cpassword" name="cpassword"><br><br>
+
+      <input type="submit" value="Submit"><br><br>
+      
+      <div class="form-footer">
+        <a href="main page.html">Go Back To Home</a>
+      </div>
+    </form>
+  </div>
+
+</body>
+</html>
