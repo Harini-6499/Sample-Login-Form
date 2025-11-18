@@ -4,21 +4,21 @@
   <title>HTML FORM</title>
   <style>
     body {
-      background-color: #f0f4f8; /* Light background */
+      background-color: #f0f4f8;
       font-family: sans-serif;
       padding: 10px;
       color: #333;
     }
     header {
-      background-color: #333; /* Dark header background */
+      background-color: #333;
       text-align: center;
       color: white;
-      margin-bottom:15px;
-      padding:20px;
-      font-size:20px;
+      margin-bottom: 15px;
+      padding: 20px;
+      font-size: 20px;
     }
-    form{
-      width:400px;
+    form {
+      width: 400px;
       margin: auto;
       background-color: white;
       padding: 50px;
@@ -26,119 +26,153 @@
       box-shadow: 0 0 15px black;
     }
     label {
-      font-weight:bold;
+      font-weight: bold;
     }
 
+    /* RED BORDER FOR INVALID FIELDS */
+    .error {
+      border: 2px solid red !important;
+    }
   </style>
-  <script>
-    function validateForm() {
-      let fname = document.getElementById("fname").value.trim();
-      let lname = document.getElementById("lname").value.trim();
-      let dob = document.getElementById("dob").value.trim();
-      let email = document.getElementById("email").value.trim();
-      let phone = document.getElementById("phone").value.trim();
-      let age = document.getElementById("age").value.trim();
-      let password = document.getElementById("password").value.trim();
-      let cpassword = document.getElementById("cpassword").value.trim();
 
-      // Check for empty fields
-      if (fname === "") {
-        alert("First Name cannot be empty!");
-        return false;
-      }
+<script>
+function validateForm() {
 
-      if (lname === "") {
-        alert("Last Name cannot be empty!");
-        return false;
-      }
+  // Get all fields
+  let fname = document.getElementById("fname");
+  let lname = document.getElementById("lname");
+  let dob = document.getElementById("dob");
+  let email = document.getElementById("email");
+  let phone = document.getElementById("phone");
+  let age = document.getElementById("age");
+  let password = document.getElementById("password");
+  let cpassword = document.getElementById("cpassword");
+  let gender = document.querySelector('input[name="gender"]:checked');
 
-      let emailPattern = /^[a-zA-Z0-9._%+-]+@[a-z0-9]+\.[a-z]{2,}$/;
-      if (!emailPattern.test(email)) {
-        alert("Enter a valid email!");
-        return false;
-      }
+  // Remove old error borders
+  [fname, lname, dob, email, phone, age, password, cpassword].forEach(field => field.classList.remove("error"));
 
-      // Phone validation: Must be numeric and not empty
-      if (phone === "" || isNaN(phone)) {
-        alert("Enter a valid phone number!");
-        return false;
-      }
+  // First Name
+  if (fname.value.trim() === "") {
+    fname.classList.add("error");
+    alert("First Name cannot be empty!");
+    return false;
+  }
 
-      // Age validation: Must be a valid number
-      if (age === "" || isNaN(age)) {
-        alert("Please enter a valid age!");
-        return false;
-      }
+  // Last Name
+  if (lname.value.trim() === "") {
+    lname.classList.add("error");
+    alert("Last Name cannot be empty!");
+    return false;
+  }
 
-      // Password matching
-      if (password === "" || cpassword === "") {
-        alert("Password cannot be empty!");
-        return false;
-      }
+  // Gender
+  if (!gender) {
+    alert("Please select your gender!");
+    return false;
+  }
 
-      if (password !== cpassword) {
-        alert("Passwords do not match!");
-        return false;
-      }
+  // Email
+  let emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  if (!emailPattern.test(email.value.trim())) {
+    email.classList.add("error");
+    alert("Enter a valid email!");
+    return false;
+  }
 
-      // Date of birth validation (YYYY-MM-DD format)
-      var dobPattern = /^\d{4}-\d{2}-\d{2}$/;
-      if (dob == null || dob == "" || !dobPattern.test(dob)) {
-        alert("Invalid date of birth");
-        return false;
-      }
+  // Phone (10 digits)
+  let phonePattern = /^[0-9]{10}$/;
+  if (!phonePattern.test(phone.value.trim())) {
+    phone.classList.add("error");
+    alert("Enter a valid 10-digit phone number!");
+    return false;
+  }
 
-      alert("Form submitted successfully!");
-      return true;
-    }
-  </script>
+  // Age
+  if (age.value.trim() === "" || isNaN(age.value) || age.value <= 0) {
+    age.classList.add("error");
+    alert("Please enter a valid age!");
+    return false;
+  }
+
+  // Password rule
+  let passwordPattern = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+  if (!passwordPattern.test(password.value)) {
+    password.classList.add("error");
+    alert("Password must be at least 8 characters and contain one letter and one number!");
+    return false;
+  }
+
+  // Confirm Password
+  if (password.value !== cpassword.value) {
+    cpassword.classList.add("error");
+    alert("Passwords do not match!");
+    return false;
+  }
+
+  // DOB empty
+  if (dob.value === "") {
+    dob.classList.add("error");
+    alert("Please select your date of birth!");
+    return false;
+  }
+
+  // Future date check
+  let dobDate = new Date(dob.value);
+  let today = new Date();
+  if (dobDate >= today) {
+    dob.classList.add("error");
+    alert("Invalid date of birth!");
+    return false;
+  }
+
+  alert("Form submitted successfully!");
+  return true;
+}
+</script>
 </head>
+
 <body>
 
-  <header>Profile Setup</header>
+<header>Profile Setup</header>
 
-  <div class="container">
-    <form id="myform" action="submit" method="post" onsubmit="return validateForm()">
-      
-      <label for="fname">First Name:</label><br>
-      <input type="text" id="fname" name="fname"><br><br>
-      
-      <label for="lname">Last Name:</label><br>
-      <input type="text" id="lname" name="lname"><br><br>
-      
-      <label for="dob">Date of Birth:</label><br>
-      <input type="date" id="dob" name="dob"><br><br>
-      
-      <label>Gender:</label><br>
-      <div class="radio-group">
-        <input type="radio" id="male" name="gender" value="Male">
-        <label for="male">Male</label><br>
-        <input type="radio" id="female" name="gender" value="Female">
-        <label for="female">Female</label><br>
-      </div>
+<form id="myform" action="submit" method="post" onsubmit="return validateForm()">
 
-      <label for="email">Email:</label><br>
-      <input type="text" id="email" name="email"><br><br>
-      
-      <label for="phone">Phone Number:</label><br>
-      <input type="text" id="phone" name="phone" maxlength="10"><br><br>
+  <label for="fname">First Name:</label><br>
+  <input type="text" id="fname" name="fname"><br><br>
 
-      <label for="age">Age:</label><br>
-      <input type="text" id="age" name="age"><br><br>
+  <label for="lname">Last Name:</label><br>
+  <input type="text" id="lname" name="lname"><br><br>
 
-      <label for="password">Password:</label><br>
-      <input type="password" id="password" name="password" required minlength="8" pattern="(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}" title="Password must be at least 8 characters long and contain at least one letter and one number."><br><br>
+  <label for="dob">Date of Birth:</label><br>
+  <input type="date" id="dob" name="dob"><br><br>
 
-      <label for="cpassword">Confirm Password:</label><br>
-      <input type="password" id="cpassword" name="cpassword"><br><br>
+  <label>Gender:</label><br>
+  <input type="radio" id="male" name="gender" value="Male"> <label for="male">Male</label><br>
+  <input type="radio" id="female" name="gender" value="Female"> <label for="female">Female</label><br><br>
 
-      <input type="submit" value="Submit"><br><br>
-      
-      <div class="form-footer">
-        <a href="main page.html">Go Back To Home</a>
-      </div>
-    </form>
+  <label for="email">Email:</label><br>
+  <input type="text" id="email" name="email"><br><br>
+
+  <label for="phone">Phone Number:</label><br>
+  <input type="text" id="phone" name="phone" maxlength="10"><br><br>
+
+  <label for="age">Age:</label><br>
+  <input type="text" id="age" name="age"><br><br>
+
+  <label for="password">Password:</label><br>
+  <input type="password" id="password" name="password"><br><br>
+
+  <label for="cpassword">Confirm Password:</label><br>
+  <input type="password" id="cpassword" name="cpassword"><br><br>
+
+  <input type="submit" value="Submit"><br><br>
+
+  <div class="form-footer">
+    <a href="main page.html">Go Back To Home</a>
   </div>
+
+</form>
 
 </body>
 </html>
