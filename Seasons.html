@@ -1,0 +1,56 @@
+<html>
+<head>
+    <title>Creating an Input Field</title>
+    <style>
+        body{
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: lightblue;
+            font-size: 15px;
+            text-align:center;
+            color:black;
+        }
+        h2{
+            font-family: Calibri;
+            font-size: 25px;
+            text-align: center;
+            color:white;
+        }
+        </style>
+               
+            </head>
+            <body>
+                <h1>Types of Seasons</h1>
+                <form onsubmit ="return showSeason()">
+                <label for="num">Enter a number:</label><br><br>
+                <input type="number" name="num" id="num">
+           </form>
+                <p id="result"></p>
+            <script>
+                   function showSeason(){
+                      num=parseInt(document.getElementById("num").value);
+                      let text="";
+                     switch(num)
+                    {
+                     case 1:
+                           text = "Spring";
+                           break;
+                    case 2: 
+                            text = "Atom";
+                            break;
+                    case 3:
+                            text = "Winter";       
+                            break;
+                    case 4:
+                            text = "Winter";       
+                            break;
+                    default:      
+                            text = "This number has no value";       
+                            break;        
+                    }
+                    document.getElementById("result").innerText=text;
+                    return false;               
+                }
+        
+            </script>
+            </body>
+            </html>

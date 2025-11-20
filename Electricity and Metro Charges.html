@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Electricity / Metro Charges</title>
+    <style>
+        body{
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: lightblue;
+            font-size: 15px;
+            color:black;
+        }
+        h1{
+            font-family: Calibri;
+            font-size: 25px;
+            color:rgb(34, 11, 138);
+            text-align:center;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Electricity / Metro Charges</h1>
+
+    <label>Electricity :</label><br>
+    <select id="connection">
+        <option value="">Select</option> 
+        <option value="Domestic">Domestic</option>
+        <option value="Commercial">Commercial</option>
+    </select><br><br>
+
+    <label>Metro :</label><br>
+    <select id="metro">
+        <option value="">Select</option> 
+        <option value="Domestic">Domestic</option>
+        <option value="Commercial">Commercial</option>
+    </select><br><br>
+
+    <label>Units Consumed:</label><br>
+    <input type="number" id="units"><br><br>
+
+    <label>Charges:</label>
+    <p id="charges"></p>
+
+    <input type="submit" value="Calculate" onclick="return ElectricityCharges()">
+
+<script>
+function ElectricityCharges(){
+
+    let units = parseInt(document.getElementById("units").value);
+    let type = document.getElementById("connection").value;
+    let metro = document.getElementById("metro").value;
+
+    let charges = "";
+
+    
+    if (metro !== "") {
+        if (metro === "Domestic") {
+            charges = units * 4;
+        } 
+        else if (metro === "Commercial") {
+            charges = units * 8;
+        }
+    }
+    else if (type !== "") {
+        if (type === "Domestic") {
+            charges = units * 5;
+        } 
+        else if (type === "Commercial") {
+            charges = units * 10;
+        }
+    }
+    else {
+        alert("Please select a type to calculate charges.");
+        return false;
+    }
+
+    document.getElementById("charges").innerText = charges;
+    return false;
+}
+</script>
+
+</body>
+</html>
